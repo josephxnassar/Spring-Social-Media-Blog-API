@@ -1,106 +1,89 @@
-# Project: Spring Social media blog API
+# Spring Social Media Blog API
 
-## Background 
+## Project Description
 
-Full-stack applications are typically concerned with both a front end, that displays information to the user and takes in input, and a backend, that manages persisted information.
+This social media application will serve as a backend API with no frontend interface. Like before, the application will include core features such as user account management and the ability for users to submit, update, and delete messages. However, this iteration of the project must be developed using the Spring Framework, specifically leveraging Spring Boot and Spring Web. As with the earlier version, the backend should be capable of delivering all necessary data to support a frontend (if added later), while also handling key user actions such as registration, login, and full message lifecycle management.
 
-This project will be a backend for a hypothetical social media app, where we must manage our users’ accounts as well as any messages that they submit to the application. However, the functionality for this project will leverage a popular web application framework for Java known as Spring. The Spring framework allows for automatic injection and configuration of many features, including data persitence, endpoints and conventional data manipulation logic (CRUD operations).
+## Technologies Used
 
-In our hypothetical micro-blogging or messaging app, any user should be able to see all of the messages posted to the site, or they can see the messages posted by a particular user. In either case, we require a backend which is able to deliver the data needed to display this information as well as process actions like logins, registrations, message creations, message updates, and message deletions.
+* Java - java 23.0.2
+* Maven - apache maven 3.0.0-M7
+* h2database - h2 2.1.214
+* Javalin - javalin 5.0.1
+* JUnit - junit 4.13.2
+* Mockito - mockito 4.9.0
+* springframework.boot - spring-boot-starter-web
 
-## Database Tables 
+## Features
 
-The following tables will be initialized in your project's built-in database upon startup using the configuration details in the application.properties file and the provided SQL script.
+List of features
+* Adding a user
+* Login
+* Creating a message
+* Get all messages
+* Get a specific message
+* Delete a specific message
+* Update a specific message
+* Get messages for a user
 
-### Account
-```
-accountId integer primary key auto_increment,
-username varchar(255) not null unique,
-password varchar(255)
-```
+To-do list:
+* Implement frontend GUI
 
-### Message
-```
-messageId integer primary key auto_increment,
-postedBy integer,
-messageText varchar(255),
-timePostedEpoch long,
-foreign key (postedBy) references Account(accountId)
-```
+## Getting Started
 
-# Spring Technical Requirement
+Windows:
+1. Install Git (if not already installed)
+    Download from: https://git-scm.com/download/win
 
-## Project must leverage the Spring Boot Framework
+2. You can either:
+    a. Open Git Bash and navigate to the directory where you want to clone the repo.
+    b. Navigate to the directory where you want to clone the repo, right-click inside the folder, and select “Git Bash Here.”
+Note: Use "cd /c/Users/YourName/Path/To/Folder" to change directories.
 
-Java classes have been provided, but your entire project MUST leverage the Spring framework.
-In addition to functional test cases, "SpringTest" will verify that you have leveraged the Spring framework, Spring Boot, Spring MVC, and Spring Data.
-SpringTest will verify the following
+3. Clone the repository
+git clone https://github.com/josephxnassar/Social-Media-Blog-API.git
 
- - That you have, by any means, have a bean for the AccountService, MessageService, AccountRepository, MessageRepository, and SocialMediaController classes
- - That AccountRepository and MessageRepository are working JPARepositories based on their corresponding Account and Message entities
- - That your Spring Boot app leverages MVC by checking for Spring's default error message structure.
- 
-The app will already be a Spring Boot app with a valid application.properties and valid database entities at the start.
+Linux:
+1. Install Git (if not already installed)
+sudo apt update && sudo apt install git
 
-# User Stories
+2. Open terminal and navigate to the directory where you want to clone the repo
+Note: Use "cd /c/Users/YourName/Path/To/Folder" to change directories.
 
-## 1: Our API should be able to process new User registrations.
+3. Clone the repository
+git clone https://github.com/josephxnassar/Social-Media-Blog-API.git
 
-As a user, I should be able to create a new Account on the endpoint POST localhost:8080/register. The body will contain a representation of a JSON Account, but will not contain an accountId.
+## Usage
 
-- The registration will be successful if and only if the username is not blank, the password is at least 4 characters long, and an Account with that username does not already exist. If all these conditions are met, the response body should contain a JSON of the Account, including its accountId. The response status should be 200 OK, which is the default. The new account should be persisted to the database.
-- If the registration is not successful due to a duplicate username, the response status should be 409. (Conflict)
-- If the registration is not successful for some other reason, the response status should be 400. (Client error)
+After installation, it's important to understand the structure of the project:
 
-## 2: Our API should be able to process User logins.
+SocialMediaController.java represents the controller layer. It defines the API endpoints that the client can send requests to, along with the corresponding handler methods. If you want to add new endpoints or handle different types of HTTP requests, this is where you'll do it.
 
-As a user, I should be able to verify my login on the endpoint POST localhost:8080/login. The request body will contain a JSON representation of an Account.
+AccountService.java and MessageService.java make up the service layer. They contain the business logic and act as a bridge between the controller and repository layers. Any functionality added in the controller should be linked through the appropriate service class.
 
-- The login will be successful if and only if the username and password provided in the request body JSON match a real account existing on the database. If successful, the response body should contain a JSON of the account in the response body, including its accountId. The response status should be 200 OK, which is the default.
-- If the login is not successful, the response status should be 401. (Unauthorized)
+AccountRepository.java and MessageRepository.java represent the data access layer. These interfaces interact directly with the database and are responsible for operations such as saving, retrieving, updating, and deleting records. If you need to define custom queries, you can add them here.
+
+Account.java and Message.java are model classes representing an account and a message in the database. If you want to introduce a new database feature or entity, this is where you'd define its structure.
 
 
-## 3: Our API should be able to process the creation of new messages.
+## License
 
-As a user, I should be able to submit a new post on the endpoint POST localhost:8080/messages. The request body will contain a JSON representation of a message, which should be persisted to the database, but will not contain a messageId.
+Copyright (c) 2025 Joseph nassar
 
-- The creation of the message will be successful if and only if the messageText is not blank, is not over 255 characters, and postedBy refers to a real, existing user. If successful, the response body should contain a JSON of the message, including its messageId. The response status should be 200, which is the default. The new message should be persisted to the database.
-- If the creation of the message is not successful, the response status should be 400. (Client error)
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+copies of the Software, and to permit persons to whom the Software is 
+furnished to do so, subject to the following conditions:
 
-## 4: Our API should be able to retrieve all messages.
+The above copyright notice and this permission notice shall be included in 
+all copies or substantial portions of the Software.
 
-As a user, I should be able to submit a GET request on the endpoint GET localhost:8080/messages.
-
-- The response body should contain a JSON representation of a list containing all messages retrieved from the database. It is expected for the list to simply be empty if there are no messages. The response status should always be 200, which is the default.
-
-## 5: Our API should be able to retrieve a message by its ID.
-
-As a user, I should be able to submit a GET request on the endpoint GET localhost:8080/messages/{messageId}.
-
-- The response body should contain a JSON representation of the message identified by the messageId. It is expected for the response body to simply be empty if there is no such message. The response status should always be 200, which is the default.
-
-## 6: Our API should be able to delete a message identified by a message ID.
-
-As a User, I should be able to submit a DELETE request on the endpoint DELETE localhost:8080/messages/{messageId}.
-
-- The deletion of an existing message should remove an existing message from the database. If the message existed, the response body should contain the number of rows updated (1). The response status should be 200, which is the default.
-- If the message did not exist, the response status should be 200, but the response body should be empty. This is because the DELETE verb is intended to be idempotent, ie, multiple calls to the DELETE endpoint should respond with the same type of response.
-
-## 7: Our API should be able to update a message text identified by a message ID.
-
-As a user, I should be able to submit a PATCH request on the endpoint PATCH localhost:8080/messages/{messageId}. The request body should contain a new messageText values to replace the message identified by messageId. The request body can not be guaranteed to contain any other information.
-
-- The update of a message should be successful if and only if the message id already exists and the new messageText is not blank and is not over 255 characters. If the update is successful, the response body should contain the number of rows updated (1), and the response status should be 200, which is the default. The message existing on the database should have the updated messageText.
-- If the update of the message is not successful for any reason, the response status should be 400. (Client error)
-
-## 8: Our API should be able to retrieve all messages written by a particular user.
-
-As a user, I should be able to submit a GET request on the endpoint GET localhost:8080/accounts/{accountId}/messages.
-
-- The response body should contain a JSON representation of a list containing all messages posted by a particular user, which is retrieved from the database. It is expected for the list to simply be empty if there are no messages. The response status should always be 200, which is the default.
-
-## 9: The Project utilizes the Spring Framework.
-
-- The project was created leveraging the spring framework, including dependency injection, autowire functionality and/or Spring annotations.
-
-# Good luck!
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+THE SOFTWARE.
