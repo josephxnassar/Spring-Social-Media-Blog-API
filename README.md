@@ -57,13 +57,13 @@ git clone https://github.com/josephxnassar/Social-Media-Blog-API.git
 
 After installation, it's important to understand the structure of the project:
 
-SocialMediaController.java represents the controller layer. It defines the API endpoints that the client can send requests to, along with the corresponding handler methods. If you want to add new endpoints or handle different types of HTTP requests, this is where you'll do it.
+SocialMediaController.java represents the controller layer. It defines the REST API endpoints that the client can send requests to, using Spring annotations like @RestController, @GetMapping, @PostMapping, and so on. If you want to add new endpoints or handle different types of HTTP requests, this is where you'll do it.
 
-AccountService.java and MessageService.java make up the service layer. They contain the business logic and act as a bridge between the controller and repository layers. Any functionality added in the controller should be linked through the appropriate service class.
+AccountService.java and MessageService.java make up the service layer. These classes are annotated with @Service, making them Spring-managed components. They contain the business logic and act as a bridge between the controller and repository layers. Any functionality added in the controller should be routed through the appropriate service class.
 
-AccountRepository.java and MessageRepository.java represent the data access layer. These interfaces interact directly with the database and are responsible for operations such as saving, retrieving, updating, and deleting records. If you need to define custom queries, you can add them here.
+AccountRepository.java and MessageRepository.java represent the data access layer. These interfaces extend JpaRepository, which is part of Spring Data JPA. This gives you built-in methods for interacting with the database, like saving, updating, and deleting records. You can also define custom queries using method names or the @Query annotation.
 
-Account.java and Message.java are model classes representing an account and a message in the database. If you want to introduce a new database feature or entity, this is where you'd define its structure.
+Account.java and Message.java are model classes representing an account and a message in the database. They’re annotated with @Entity and map to database tables using JPA. If you want to introduce a new database feature or entity, this is where you'd define its structure and field mappings.
 
 
 ## License
